@@ -2,6 +2,7 @@
   "name": "image-server",
   "version": "1.0.0",
   "description": "Simple image serving application",
+  "license": "MIT",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
