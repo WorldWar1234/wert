@@ -1,4 +1,3 @@
-require('dotenv').config();
 const scalingo = require('scalingo-sdk');
 
 const client = new scalingo.Client({ token: tk-us-SXe6hmk4BIH7k2eyuA_n4qQmearur9UUtq6ar6MRvQ87HMz3 });
