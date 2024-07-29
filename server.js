@@ -2,8 +2,12 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const compress = require('./compress');
+const params = require('./params');
 
 const app = express();
+
+// Ensure params middleware runs before image handling
+app.use(params);
 
 app.get('/images/:imageId', async (req, res) => {
   const imagePath = path.join(__dirname, 'images', req.params.imageId + '.jpg'); // Adjust path as needed
@@ -11,10 +15,10 @@ app.get('/images/:imageId', async (req, res) => {
   try {
     const imageBuffer = fs.readFileSync(imagePath);
     const compressedImage = await compress(req, res, imageBuffer);
-    res.setHeader('Content-Type', compressedImage.contentType || 'image/jpeg'); // Set content type based on compression result
-    res.send(compressedImage);
+    res.setHeader('Content-Type', compressedImage.contentType);
+    res.send(compressedImage.data);
   } catch (err) {
-    console.error('Error reading image:', err);
+    console.error('Error processing image:', err);
     res.sendStatus(500);
   }
 });
