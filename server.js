@@ -5,7 +5,7 @@ const authenticate = require('./src/authenticate');
 const params = require('./src/params');
 const proxy = require('./src/proxy');
 
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 10000;
 
 
 app.get('/', authenticate, params, proxy);
