@@ -1,16 +1,37 @@
-
-const scalingo = require('scalingo-sdk');
-
-const client = new scalingo.Client({ token:tk-us-yhyRo6DKcM_VJY7gpqXZ6Ni0KHf73apagIADaciq_ntdtBJZ});
+const https = require('https');
 
 async function getImage(imageId) {
-  try {
-    const file = await client.file.download(imageId);
-    return file.content;
-  } catch (err) {
-    console.error('Error fetching image:', err);
-    throw err;
-  }
+  const options = {
+    hostname: 'api.scalingo.com',
+    path: `/v1/apps/<your-app-name>/files/${imageId}`,
+    method: 'GET',
+    headers: {
+      'Authorization': `Bearer ${process.env.SCALINGO_TOKEN}`
+    }
+  };
+
+  return new Promise((resolve, reject) => {
+    const req = https.request(options, (res) => {
+      if (res.statusCode !== 200) {
+        reject(new Error(`Error fetching image: ${res.statusCode}`));
+      }
+
+      const data = [];
+      res.on('data', (chunk) => {
+        data.push(chunk);
+      });
+
+      res.on('end', () => {
+        resolve(Buffer.concat(data));
+      });
+    });
+
+    req.on('error', (error) => {
+      reject(error);
+    });
+
+    req.end();
+  });
 }
 
 module.exports = { getImage };
