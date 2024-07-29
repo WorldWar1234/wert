@@ -1,5 +1,6 @@
 function bypass(req, res, content) {
-  res.setHeader('content-length', content);
+  const buffer = Buffer.from(content);
+  res.setHeader('Content-Length', buffer.length);
   res.status(200).send(content);
 }
 
