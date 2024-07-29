@@ -1,19 +1,16 @@
 const express = require('express');
-const fs = require('fs');
 const path = require('path');
 const compress = require('./compress');
 const params = require('./params');
+const imageStorage = require('./imageStorage'); // Assuming an image storage module
 
 const app = express();
 
-// Ensure params middleware runs before image handling
 app.use(params);
 
 app.get('/images/:imageId', async (req, res) => {
-  const imagePath = path.join(__dirname, 'images', req.params.imageId + '.jpg'); // Adjust path as needed
-
   try {
-    const imageBuffer = fs.readFileSync(imagePath);
+    const imageBuffer = await imageStorage.getImage(req.params.imageId); // Fetch image from storage
     const compressedImage = await compress(req, res, imageBuffer);
     res.setHeader('Content-Type', compressedImage.contentType);
     res.send(compressedImage.data);
@@ -23,6 +20,7 @@ app.get('/images/:imageId', async (req, res) => {
   }
 });
 
-app.listen(3000, () => {
-  console.log('Server listening on port 3000');
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+  console.log(`Server listening on port ${port}`);
 });
