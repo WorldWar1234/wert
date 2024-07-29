@@ -1,5 +1,4 @@
 const express = require('express');
-const path = require('path');
 const compress = require('./compress');
 const params = require('./params');
 const imageStorage = require('./imageStorage'); // Assuming an image storage module
