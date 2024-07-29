@@ -1,6 +1,6 @@
-function bypass(req, res, buffer) {
-  res.setHeader('content-length', buffer.length);
-  res.status(200).send(buffer);
+function bypass(req, res, content) {
+  res.setHeader('content-length', content);
+  res.status(200).send(content);
 }
 
 module.exports = bypass;
