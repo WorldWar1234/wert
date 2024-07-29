@@ -1,5 +1,5 @@
 const sharp = require('sharp');
-const redirect = require('./redirect');
+const bypass = require('./bypass');
 
 function compress(req, res, input) {
   const format = req.params.webp ? 'webp' : 'jpeg';
@@ -13,7 +13,7 @@ function compress(req, res, input) {
     })
     .toBuffer((err, output, info) => {
       if (err || !info || res.headersSent) {
-        redirect(req, res, buffer);
+        return bypass(req, res, buffer);
       }
 
       res.setHeader('content-type', `image/${format}`);
