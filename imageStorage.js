@@ -1,6 +1,6 @@
 const scalingo = require('scalingo-sdk');
 
-const client = new scalingo.Client({ token: tk-us-SXe6hmk4BIH7k2eyuA_n4qQmearur9UUtq6ar6MRvQ87HMz3 });
+const client = new scalingo.Client({ token: tk-us-oMTRUDBTL-0mlEqbsAcI25kVHbirFxPyDi99zt6V0C-GLlv7 });
 
 async function getImage(imageId) {
   try {
