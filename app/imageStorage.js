@@ -3,7 +3,7 @@ const https = require('https');
 async function getImage(imageId) {
   const options = {
     hostname: 'api.scalingo.com',
-    path: `/v1/apps/<your-app-name>/files/${imageId}`,
+    path: `/v1/apps/ggvxfg/files/${imageId}`,
     method: 'GET',
     headers: {
       'Authorization': `Bearer ${process.env.SCALINGO_TOKEN}`
